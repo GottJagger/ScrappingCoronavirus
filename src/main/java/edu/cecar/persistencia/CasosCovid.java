@@ -11,6 +11,7 @@ package edu.cecar.persistencia;
  */
 public class CasosCovid {
     
+    String Pais;
     int totalCasosConfirmados;
     int totalCasosNuevosConfirmados;
     int totalMuertos;
@@ -19,11 +20,20 @@ public class CasosCovid {
     public CasosCovid() {
     }
 
-    public CasosCovid(int totalCasosConfirmados, int totalCasosNuevosConfirmados, int totalMuertos, int TotalNuevosMuertos) {
+    public CasosCovid(String Pais, int totalCasosConfirmados, int totalCasosNuevosConfirmados, int totalMuertos, int TotalNuevosMuertos) {
+        this.Pais = Pais;
         this.totalCasosConfirmados = totalCasosConfirmados;
         this.totalCasosNuevosConfirmados = totalCasosNuevosConfirmados;
         this.totalMuertos = totalMuertos;
         this.TotalNuevosMuertos = TotalNuevosMuertos;
+    }
+
+    public String getPais() {
+        return Pais;
+    }
+
+    public void setPais(String Pais) {
+        this.Pais = Pais;
     }
 
     public int getTotalCasosConfirmados() {
@@ -57,8 +67,7 @@ public class CasosCovid {
     public void setTotalNuevosMuertos(int TotalNuevosMuertos) {
         this.TotalNuevosMuertos = TotalNuevosMuertos;
     }
-    
-    
 
+    
     
 }
