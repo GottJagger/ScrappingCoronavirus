@@ -109,6 +109,7 @@ public class ScrappingPDF {
     }
 
     public static void main(String[] args) throws IOException {
+        
         String col1 = lectorPDF("./anexos/20200816-covid-19-sitrep-209.pdf", 0, 120, 200, 220, 6);
   
         String col2 = lectorPDF("./anexos/20200816-covid-19-sitrep-209.pdf", 180, 120, 100, 220, 6);
