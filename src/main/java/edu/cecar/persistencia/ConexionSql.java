@@ -97,14 +97,5 @@ public class ConexionSql {
         }
     }
 
-//    public static void guardarCasas(String id, String name, String mascot, String headOfHouse, String houseGhost, String founder, String school) {
-//        try {
-//            sentencia.executeUpdate("INSERT INTO casas" + "(id, name, mascot, headOfHouse, houseGhost, founder, school) "
-//                    + "VALUES('" + id + "','" + name + "','" + mascot + "','" + headOfHouse + "','" + houseGhost + "','" + founder + "','" + school + "')");
-//            System.out.println("Guardado!");
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ConexionSql.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println("No Guardado :(");
-//        }
-//    }
+
 }
