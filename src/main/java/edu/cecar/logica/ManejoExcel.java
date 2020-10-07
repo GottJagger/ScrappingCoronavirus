@@ -5,18 +5,21 @@
  */
 package edu.cecar.logica;
 
-import static edu.cecar.logica.ScrappingPDF.FormateoDeArrayList;
 import static edu.cecar.logica.ScrappingPDF.GuardarDatosPorColumnaPDF;
 import static edu.cecar.logica.ScrappingPDF.guardarDatosPDF;
 import static edu.cecar.logica.ScrappingPDF.lectorPDF;
 import edu.cecar.persistencia.CasosCovid;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -38,20 +41,809 @@ public class ManejoExcel {
         ArrayList<CasosCovid> PDF4 = ScrappingPDF.FormateoDeArrayList(guardarDatosPDF(lectorPDF("./anexos/20200815-covid-19-sitrep-208.pdf", 0, 120, 500, 220, 6)));
         ArrayList<CasosCovid> PDF5 = ScrappingPDF.FormateoDeArrayList(GuardarDatosPorColumnaPDF(col1, col2, col3, col4, col5));
 
-        HSSFWorkbook ArchivoExcel = new HSSFWorkbook();
+        File file = new File("./excel/plantilla.xlsx");
 
+        FileInputStream archivo = new FileInputStream(file);
+
+        Workbook ArchivoExcel = WorkbookFactory.create(archivo);
+
+        //-------Apertura del archivo---------------------------------------
         for (int i = 0; i < 10; i++) {
-            Sheet hoja = ArchivoExcel.createSheet(PDF1.get(i).getPais());
-            
-            
+
+            Cell celda;
+            Row fila;
+
+            Sheet hoja = ArchivoExcel.getSheetAt(i);
+
+            for (int j = 0; j <= 5; j++) {
+
+                
+
+                fila = hoja.createRow(0);
+                celda = fila.createCell(0);
+                celda.setCellValue("PDF");
+                celda = fila.createCell(1);
+                celda.setCellValue("Total de casos confirmados");
+                celda = fila.createCell(2);
+                celda.setCellValue("Total de nuevos de casos confirmados");
+                celda = fila.createCell(3);
+                celda.setCellValue("Total de muertos");
+                celda = fila.createCell(4);
+                celda.setCellValue("Total de nuevos muertos");
+
+                if (hoja.getSheetName().equals("Peru")) {
+
+                    
+                    if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Colombia")) {
+                    if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Chile")) {
+                    if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Argentina")) {
+                     if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Ecuador")) {
+                     if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Ecuador")) {
+                    if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Canada")) {
+                     if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Bolivia (Plurinational State of")) {
+                    if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Dominican Republic")) {
+                     if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Panama")) {
+                     if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+
+                }
+                if (hoja.getSheetName().equals("Guatemala")) {
+                     if (j == 1) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(12);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF1.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF1.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF1.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 2) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(13);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF2.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF2.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF2.get(i).getTotalNuevosMuertos());
+
+                    }
+                    if (j == 3) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(14);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF3.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF3.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF3.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 4) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(15);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF4.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF4.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF4.get(i).getTotalNuevosMuertos());
+                    }
+                    if (j == 5) {
+                        fila = hoja.createRow(j);
+                        celda = fila.createCell(0);
+                        celda.setCellValue(16);
+                        celda = fila.createCell(1);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosConfirmados());
+                        celda = fila.createCell(2);
+                        celda.setCellValue(PDF5.get(i).getTotalCasosNuevosConfirmados());
+                        celda = fila.createCell(3);
+                        celda.setCellValue(PDF5.get(i).getTotalMuertos());
+                        celda = fila.createCell(4);
+                        celda.setCellValue(PDF5.get(i).getTotalNuevosMuertos());
+                    }
+                }
+
+            }
+            //---------clausura del archivo--------------------------------------
+            FileOutputStream salida = new FileOutputStream(file);
+
+            ArchivoExcel.write(salida);
+            salida.close();
+
         }
-        
-        FileOutputStream salida = new FileOutputStream("./excel/CasosCovid.xlsm");
-        ArchivoExcel.write(salida);
+
         ArchivoExcel.close();
-        salida.close();
     }
-    
+
     public static void main(String[] args) throws IOException {
         generarExcel();
     }
