@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="ReconocedorRelaciones">
+  <ClassDiagramComponents>
+    <Class name="ManejoExcel" package="edu.cecar.logica" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="guardarEnExcel" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="ScrappingPDF" package="edu.cecar.logica" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="lectorPDF" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="ruta"/>
+          <Argument type="int" name="l"/>
+          <Argument type="int" name="u"/>
+          <Argument type="int" name="r"/>
+          <Argument type="int" name="d"/>
+          <Argument type="int" name="pagina"/>
+        </Method>
+        <Method name="guardarDatosPDF" returnType="ArrayList&lt;CasosCovid&gt;" visibility="public" isStatic="true">
+          <Argument type="String" name="Documento"/>
+        </Method>
+        <Method name="GuardarDatosPorColumnaPDF" returnType="ArrayList&lt;CasosCovid&gt;" visibility="public" isStatic="true">
+          <Argument type="String" name="col1"/>
+          <Argument type="String" name="col2"/>
+          <Argument type="String" name="col3"/>
+          <Argument type="String" name="col4"/>
+          <Argument type="String" name="col5"/>
+        </Method>
+        <Method name="FormateoDeArrayList" returnType="ArrayList&lt;CasosCovid&gt;" visibility="public" isStatic="true">
+          <Argument type="ArrayList&lt;CasosCovid&gt;" name="list"/>
+        </Method>
+        <Method name="mostrarEnConsola" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="TratadoDeCorreo" package="edu.cecar.logica" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="validarEmail" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="String" name="input"/>
+        </Method>
+        <Method name="EnviarCorreo" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="emailReceptor"/>
+          <Argument type="boolean" name="opcion"/>
+        </Method>
+        <Method name="mensajeParaEnviar" returnType="Message" visibility="private" isStatic="true">
+          <Argument type="Session" name="session"/>
+          <Argument type="String" name="emailEnvio"/>
+          <Argument type="String" name="emailReceptor"/>
+        </Method>
+        <Method name="mensajeParaVerificar" returnType="Message" visibility="public" isStatic="true">
+          <Argument type="Session" name="session"/>
+          <Argument type="String" name="emailEnvio"/>
+          <Argument type="String" name="emailReceptor"/>
+          <Argument type="String" name="codigo"/>
+        </Method>
+        <Method name="VerificarCorreo" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="email"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Main" package="edu.cecar.main" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="ALPHA_NUME_STRING" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="code" type="String" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="codigoDeVerificacion" returnType="String" visibility="public" isStatic="true"/>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CasosCovid" package="edu.cecar.persistencia" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="Pais" type="String" visibility="package"/>
+        <Field name="totalCasosConfirmados" type="int" visibility="package"/>
+        <Field name="totalCasosNuevosConfirmados" type="int" visibility="package"/>
+        <Field name="totalMuertos" type="int" visibility="package"/>
+        <Field name="TotalNuevosMuertos" type="int" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="Pais"/>
+          <Argument type="int" name="totalCasosConfirmados"/>
+          <Argument type="int" name="totalCasosNuevosConfirmados"/>
+          <Argument type="int" name="totalMuertos"/>
+          <Argument type="int" name="TotalNuevosMuertos"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getPais" returnType="String" visibility="public"/>
+        <Method name="setPais" returnType="void" visibility="public">
+          <Argument type="String" name="Pais"/>
+        </Method>
+        <Method name="getTotalCasosConfirmados" returnType="int" visibility="public"/>
+        <Method name="setTotalCasosConfirmados" returnType="void" visibility="public">
+          <Argument type="int" name="totalCasosConfirmados"/>
+        </Method>
+        <Method name="getTotalCasosNuevosConfirmados" returnType="int" visibility="public"/>
+        <Method name="setTotalCasosNuevosConfirmados" returnType="void" visibility="public">
+          <Argument type="int" name="totalCasosNuevosConfirmados"/>
+        </Method>
+        <Method name="getTotalMuertos" returnType="int" visibility="public"/>
+        <Method name="setTotalMuertos" returnType="void" visibility="public">
+          <Argument type="int" name="totalMuertos"/>
+        </Method>
+        <Method name="getTotalNuevosMuertos" returnType="int" visibility="public"/>
+        <Method name="setTotalNuevosMuertos" returnType="void" visibility="public">
+          <Argument type="int" name="TotalNuevosMuertos"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ConexionSql" package="edu.cecar.persistencia" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="cnx" type="Connection" visibility="private" isStatic="true"/>
+        <Field name="sentencia" type="Statement" visibility="package" isStatic="true"/>
+        <Field name="resultado" type="ResultSet" visibility="package" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Conectar" returnType="Connection" visibility="public" isStatic="true"/>
+        <Method name="guardarCorreo" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="correo"/>
+        </Method>
+        <Method name="obtenerCorreo" returnType="ArrayList&lt;Correo&gt;" visibility="public" isStatic="true"/>
+        <Method name="EliminarCorreo" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="correo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Correo" package="edu.cecar.persistencia" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="package"/>
+        <Field name="correo" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="correo"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getCorreo" returnType="String" visibility="public"/>
+        <Method name="setCorreo" returnType="void" visibility="public">
+          <Argument type="String" name="correo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="edu.cecar.persistencia.ConexionSql" target="edu.cecar.persistencia.Correo" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.cecar.logica.ScrappingPDF" target="edu.cecar.persistencia.CasosCovid" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
