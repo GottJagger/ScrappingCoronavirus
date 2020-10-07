@@ -11,7 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Message;
@@ -20,6 +23,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.Transport;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,18 +33,7 @@ import javax.swing.JOptionPane;
  */
 public class TratadoDeCorreo {
 
-    private static final String ALPHA_NUME_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private static String code;
-
-    public static String codigoDeVerificacion() {
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 7; i > 0; i--) {
-            int character = (int) (Math.random() * ALPHA_NUME_STRING.length());
-            builder.append(ALPHA_NUME_STRING.charAt(character));
-        }
-        return builder.toString();
-    }
+    
 
     public static boolean validarEmail(String input) {
 
@@ -50,15 +44,15 @@ public class TratadoDeCorreo {
 
     }
 
-    public static void EnviarCorreo(String emailReceptor, boolean opcion) throws Exception {
+    public static void EnviarCorreo(String codigo,String emailReceptor, boolean opcion) throws Exception {
         Properties props = new Properties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.starttls.enable", "true");
         props.setProperty("mail.smtp.port", "587");
         props.setProperty("mail.smtp.auth", "true");
 
-        String Email = "kindom.kg@gmail.com";
-        String pass = "godgoulchajose12";
+        String Email = "scrapp.pdf.java@gmail.com";
+        String pass = "Scrapp123";
 
         Session session = Session.getDefaultInstance(props, new Authenticator() {
             @Override
@@ -68,10 +62,10 @@ public class TratadoDeCorreo {
 
         });
 
-        ConexionSql.Conectar();
+        //ConexionSql.Conectar();
         if (opcion) {
             ConexionSql.obtenerCorreo().forEach(e -> {
-                
+
                 Message mensaje = mensajeParaEnviar(session, Email, e.getCorreo());
                 try {
                     Transport.send(mensaje);
@@ -81,7 +75,7 @@ public class TratadoDeCorreo {
             });
 
         } else {
-            Message mensaje = mensajeParaVerificar(session, Email, emailReceptor);
+            Message mensaje = mensajeParaVerificar(session, Email, emailReceptor,codigo);
             Transport.send(mensaje);
         }
         System.out.println("el mensaje se envio correctamente");
@@ -95,8 +89,19 @@ public class TratadoDeCorreo {
             mensaje.setFrom(new InternetAddress(emailEnvio));
             mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(emailReceptor));
 
-            mensaje.setSubject("con mucho cariño ronald");
-            mensaje.setText("ronald ");
+            mensaje.setSubject("Documento Datos Coronavirus");
+            BodyPart texto = new MimeBodyPart();
+            texto.setText("Se extrajo la informacion de los PDF\nY se guardo en el siguiente excel:");
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource("./excel/plantilla.xlsx")));
+            adjunto.setFileName("CASOS COVID.xlsx");
+
+            MimeMultipart multiParte = new MimeMultipart();
+
+            multiParte.addBodyPart(texto);
+            multiParte.addBodyPart(adjunto);
+
+            mensaje.setContent(multiParte);
             return mensaje;
         } catch (Exception ex) {
             Logger.getLogger(TratadoDeCorreo.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,9 +109,9 @@ public class TratadoDeCorreo {
         return null;
     }
 
-    public static Message mensajeParaVerificar(Session session, String emailEnvio, String emailReceptor) {
+    public static Message mensajeParaVerificar(Session session, String emailEnvio, String emailReceptor,String codigo) {
         try {
-            code = codigoDeVerificacion();
+            
 
             Message mensaje = new MimeMessage(session);
             mensaje.setFrom(new InternetAddress(emailEnvio));
@@ -115,7 +120,7 @@ public class TratadoDeCorreo {
             mensaje.setSubject("Mensaje de verificacion");
             String htmlCode = "<h2>"
                     + "Enter this code in your App:<br/>"
-                    + code
+                    + codigo
                     + "</h2>";
             mensaje.setContent(htmlCode, "text/html");
 
@@ -127,28 +132,29 @@ public class TratadoDeCorreo {
         return null;
     }
 
-    public static void VerificarCorreo(String codigo, String email) {
-        ConexionSql.Conectar();
+    public static boolean VerificarCorreo(String codigo, String email) {
+        //ConexionSql.Conectar();
         String cod;
+        boolean d;
         cod = JOptionPane.showInputDialog("Ingrese codigo de verificacion:");
-        do {
+        if(cod==null){
+            JOptionPane.showMessageDialog(null, "El correo no fue Verificado\n "
+                    + "lo mas probable es que el correo no exista");
+            cod="null";
+        }
+        
             if (cod.equals(codigo)) {
-                System.out.println("El codigo similar");
+                d=true;
                 ConexionSql.guardarCorreo(email);
 
             } else {
-                System.out.println("No concuerda el correo");
+                d=false;
+                
             }
-        } while (!cod.equals(codigo));
+        
+            
 
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        //EnviarCorreo("kindom.kg@gmail.com", false);
-        System.out.println(code);
-        //VerificarCorreo(code, "jose.chagui@cecar.edu.co");
-
+        return d;
     }
 
 }

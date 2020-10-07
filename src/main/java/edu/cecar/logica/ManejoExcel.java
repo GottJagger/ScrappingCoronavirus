@@ -27,7 +27,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ManejoExcel {
 
-    public static void generarExcel() throws IOException {
+    public static void guardarEnExcel() throws IOException {
 
         String col1 = lectorPDF("./anexos/20200816-covid-19-sitrep-209.pdf", 0, 120, 200, 220, 6);
         String col2 = lectorPDF("./anexos/20200816-covid-19-sitrep-209.pdf", 180, 120, 100, 220, 6);
@@ -844,7 +844,5 @@ public class ManejoExcel {
         ArchivoExcel.close();
     }
 
-    public static void main(String[] args) throws IOException {
-        generarExcel();
-    }
+
 }

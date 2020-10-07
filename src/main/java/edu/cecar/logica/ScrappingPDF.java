@@ -107,9 +107,8 @@ public class ScrappingPDF {
 
         return list;
     }
-
-    public static void main(String[] args) throws IOException {
-        
+    
+    public static void mostrarEnConsola()throws IOException {
         String col1 = lectorPDF("./anexos/20200816-covid-19-sitrep-209.pdf", 0, 120, 200, 220, 6);
   
         String col2 = lectorPDF("./anexos/20200816-covid-19-sitrep-209.pdf", 180, 120, 100, 220, 6);
@@ -148,7 +147,7 @@ public class ScrappingPDF {
         FormateoDeArrayList(GuardarDatosPorColumnaPDF(col1, col2, col3, col4, col5)).forEach(e -> {
             System.out.println("PAIS: " + e.getPais() + "\nTOTAL DE CASOS CONFIRMADOS: " + e.getTotalCasosConfirmados() + "\nTOTAL DE NUEVOS CASOS CONFIRMADOS: " + e.getTotalCasosNuevosConfirmados() + "\nTOTAL DE MUERTOS: " + e.getTotalMuertos() + "\nTOTAL NUEVOS MUERTOS: " + e.getTotalNuevosMuertos() + "\n\n");
         });
-
     }
+
 
 }
